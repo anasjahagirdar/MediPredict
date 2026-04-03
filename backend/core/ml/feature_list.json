@@ -1,0 +1,18 @@
+[
+  "age",
+  "bmi",
+  "bp_systolic",
+  "bp_diastolic",
+  "sugar_level",
+  "cholesterol",
+  "heart_rate",
+  "gender",
+  "symptom_fever",
+  "symptom_cough",
+  "symptom_fatigue",
+  "symptom_headache",
+  "symptom_chest_pain",
+  "symptom_breathlessness",
+  "symptom_sweating",
+  "symptom_nausea"
+]
