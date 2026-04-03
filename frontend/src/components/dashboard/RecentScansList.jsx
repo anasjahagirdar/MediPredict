@@ -106,17 +106,6 @@ function RecentScansList({ scans, error }) {
                 )}
               </div>
             </div>
-
-            <div className="scan-modal__section">
-              <span>Medications</span>
-              <div className="scan-modal__chips">
-                {selectedScan.medications?.length > 0 ? (
-                  selectedScan.medications.map((item) => <span key={item}>{item}</span>)
-                ) : (
-                  <span>No medications mapped</span>
-                )}
-              </div>
-            </div>
           </div>
         </div>
       )}

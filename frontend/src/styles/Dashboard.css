@@ -464,7 +464,7 @@ body {
 }
 
 .scan-modal__grid span,
-.scan-modal__section > span {
+.scan-modal__section>span {
   display: block;
   color: var(--color-text-secondary);
   margin-bottom: 8px;
@@ -618,6 +618,7 @@ body {
   0% {
     background-position: 200% 0;
   }
+
   100% {
     background-position: -200% 0;
   }
@@ -630,6 +631,7 @@ body {
 }
 
 @media (max-width: 1080px) {
+
   .dashboard-layout,
   .dashboard-loading {
     grid-template-columns: 1fr;

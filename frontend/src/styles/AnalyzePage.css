@@ -299,7 +299,7 @@
   margin-top: 18px;
 }
 
-.analyze-result-card__section > span {
+.analyze-result-card__section>span {
   display: block;
   margin-bottom: 10px;
   color: var(--color-text-secondary);
@@ -357,4 +357,13 @@
   .analyze-result-card__actions {
     flex-direction: column;
   }
+}
+
+.reports-table th,
+.reports-table td {
+  padding-left: 40px !important;
+  padding-right: 40px !important;
+  padding-top: 20px !important;
+  padding-bottom: 20px !important;
+  text-align: left;
 }

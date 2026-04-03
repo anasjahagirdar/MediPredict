@@ -1,4 +1,4 @@
-import { Bell, Settings } from 'lucide-react';
+import { Bell, FileText, Settings } from 'lucide-react';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 
@@ -55,15 +55,16 @@ function Navbar() {
         >
           Analyse Symptoms
         </NavLink>
+        <NavLink
+          to="/reports"
+          className={({ isActive }) => `navbar__link ${isActive ? 'is-active' : ''}`}
+        >
+          <FileText size={16} />
+          <span>Reports</span>
+        </NavLink>
       </nav>
 
       <div className="navbar__actions">
-        <button className="navbar__icon-button" type="button" aria-label="Settings">
-          <Settings size={18} />
-        </button>
-        <button className="navbar__icon-button" type="button" aria-label="Notifications">
-          <Bell size={18} />
-        </button>
         <div className="navbar__avatar-wrap" ref={dropdownRef}>
           <button
             className="navbar__avatar"

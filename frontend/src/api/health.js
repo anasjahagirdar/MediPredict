@@ -25,3 +25,19 @@ export async function getScanHistory() {
   const response = await axiosInstance.get('/api/dashboard/scan-history/');
   return response.data;
 }
+
+export async function downloadReport(recordId) {
+  const response = await axiosInstance.get(`/api/reports/download/${recordId}/`, {
+    responseType: 'blob',
+  });
+
+  const blob = new Blob([response.data], { type: 'application/pdf' });
+  const url = window.URL.createObjectURL(blob);
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = `medipredict-report-${recordId}.pdf`;
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+  window.URL.revokeObjectURL(url);
+}

@@ -1,11 +1,13 @@
 import os
 import joblib
 from datetime import datetime
+from io import BytesIO
 
 from django.db.models import Sum
 from django.utils import timezone
 from django.conf import settings
 from django.contrib.auth.models import User
+from django.http import FileResponse
 
 from rest_framework import status
 from rest_framework.permissions import AllowAny, IsAuthenticated
@@ -13,6 +15,10 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
+from reportlab.lib import colors
+from reportlab.lib.pagesizes import A4
+from reportlab.lib.units import inch
+from reportlab.pdfgen import canvas
 
 from .models import Disease, HealthRecord
 from .serializers import (
@@ -241,3 +247,105 @@ class DashboardScanHistoryView(APIView):
             return Response({'scans': records}, status=status.HTTP_200_OK)
         except Exception as e:
             return Response({'message': f"History Error: {str(e)}"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+class DownloadReportView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, record_id):
+        try:
+            record = HealthRecord.objects.get(id=record_id, user=request.user)
+        except HealthRecord.DoesNotExist:
+            return Response({'message': 'Report not found.'}, status=status.HTTP_404_NOT_FOUND)
+        except Exception as e:
+            return Response({'message': f"Report Error: {str(e)}"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+        try:
+            buffer = BytesIO()
+            pdf = canvas.Canvas(buffer, pagesize=A4)
+            width, height = A4
+
+            patient_name = request.user.get_full_name().strip() or request.user.username
+            report_date = record.created_at.strftime('%B %d, %Y %I:%M %p')
+
+            pdf.setTitle(f"MediPredict Report #{record.id}")
+
+            pdf.setFillColor(colors.HexColor('#1E1E2E'))
+            pdf.rect(0, height - 72, width, 72, stroke=0, fill=1)
+            pdf.setFillColor(colors.white)
+            pdf.setFont('Helvetica-Bold', 22)
+            pdf.drawString(50, height - 42, 'MediPredict')
+            pdf.setFont('Helvetica', 10)
+            pdf.drawRightString(width - 50, height - 42, f'Report ID: {record.id}')
+
+            y = height - 110
+            pdf.setFillColor(colors.HexColor('#1A1A2E'))
+            pdf.setFont('Helvetica-Bold', 14)
+            pdf.drawString(50, y, 'Patient Overview')
+
+            y -= 28
+            pdf.setFont('Helvetica', 11)
+            pdf.drawString(50, y, f'Patient Name: {patient_name}')
+            y -= 18
+            pdf.drawString(50, y, f'Report Date: {report_date}')
+            y -= 18
+            pdf.drawString(50, y, f'Age: {record.age}')
+            y -= 18
+            pdf.drawString(50, y, f'Gender Code: {record.gender}')
+
+            y -= 36
+            pdf.setFont('Helvetica-Bold', 14)
+            pdf.drawString(50, y, 'Clinical Vitals')
+
+            vitals = [
+                ('Blood Pressure', f'{record.bp_systolic}/{record.bp_diastolic} mmHg'),
+                ('BMI', f'{record.bmi:.1f}'),
+                ('Blood Sugar', f'{record.sugar_level:.1f}'),
+                ('Cholesterol', f'{record.cholesterol:.1f}'),
+                ('Heart Rate', f'{record.heart_rate} bpm'),
+            ]
+
+            y -= 28
+            pdf.setFont('Helvetica', 11)
+            for label, value in vitals:
+                pdf.drawString(50, y, f'{label}: {value}')
+                y -= 18
+
+            y -= 18
+            pdf.setFont('Helvetica-Bold', 14)
+            pdf.drawString(50, y, 'Diagnostic Result')
+
+            y -= 28
+            pdf.setFont('Helvetica', 11)
+            pdf.drawString(50, y, f'Predicted Disease: {record.predicted_disease}')
+            y -= 18
+            pdf.drawString(50, y, f'Confidence: {record.confidence}%')
+            y -= 18
+            pdf.drawString(50, y, f'Risk Level: {record.risk_level}')
+
+            pdf.setStrokeColor(colors.HexColor('#E8E2D9'))
+            pdf.line(50, 90, width - 50, 90)
+            pdf.setFillColor(colors.HexColor('#6B7280'))
+            pdf.setFont('Helvetica-Oblique', 9)
+            text = pdf.beginText(50, 72)
+            text.setLeading(12)
+            for line in (
+                'This platform provides AI-generated health insights for informational purposes only',
+                'and should not be considered a medical diagnosis. Please consult a qualified',
+                'healthcare professional for medical advice.',
+            ):
+                text.textLine(line)
+            pdf.drawText(text)
+
+            pdf.showPage()
+            pdf.save()
+            buffer.seek(0)
+
+            return FileResponse(
+                buffer,
+                as_attachment=True,
+                filename=f'medipredict-report-{record.id}.pdf',
+                content_type='application/pdf',
+            )
+        except Exception as e:
+            return Response({'message': f"PDF Generation Error: {str(e)}"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)

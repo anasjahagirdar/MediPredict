@@ -5,6 +5,7 @@ from .views import (
     DashboardScanHistoryView,
     DashboardSummaryView,
     DashboardSymptomFrequencyView,
+    DownloadReportView,
     LoginView,
     LogoutView,
     PredictDiseaseView,
@@ -26,4 +27,5 @@ urlpatterns = [
     path('auth/refresh/', RefreshView.as_view(), name='auth-refresh'),
     path('history/', DashboardScanHistoryView.as_view(), name='history'),
     path('dashboard/stats/', DashboardSummaryView.as_view(), name='dashboard-stats'),
+    path('reports/download/<int:record_id>/', DownloadReportView.as_view(), name='report-download'),
 ]

@@ -1,0 +1,33 @@
+.disclaimer-ticker {
+  width: 100%;
+  overflow: hidden;
+  background: #f6e7c1;
+  border-bottom: 1px solid rgba(26, 26, 46, 0.08);
+  color: #1a1a2e;
+  white-space: nowrap;
+}
+
+.disclaimer-ticker__track {
+  display: inline-flex;
+  min-width: 100%;
+  align-items: center;
+  gap: 48px;
+  animation: disclaimer-marquee 28s linear infinite;
+}
+
+.disclaimer-ticker__text {
+  display: inline-block;
+  padding: 10px 0;
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+
+@keyframes disclaimer-marquee {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
