@@ -1,0 +1,894 @@
+/* ============================================================
+   PredictPage.css — MediPredict.ai
+   Complete stylesheet. Every class used in PredictPage.jsx
+   is defined here. Previously missing classes are marked
+   with "ADDED" comments.
+   ============================================================ */
+
+/* ── GLOBAL RESET ─────────────────────────────────────────── */
+/* ADDED: box-sizing fix — without this, width:100% + padding
+   causes inputs to overflow their grid cells */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* ── PAGE WRAPPER ─────────────────────────────────────────── */
+.predict-page-wrapper {
+    min-height: 100vh;
+    background: #020617;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 2rem;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+/* ── GLASS CONTAINER ──────────────────────────────────────── */
+.glass-container {
+    background: rgba(15, 23, 42, 0.4);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 40px;
+    padding: 3rem;
+    width: 100%;
+    max-width: 850px;
+    margin: auto;
+    box-shadow: 0 40px 100px rgba(0, 0, 0, 0.6);
+    text-align: center;
+}
+
+.analysis-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    padding: 0.9rem 1rem;
+    border-radius: 18px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.analysis-toolbar__meta {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.2rem;
+    color: #e2e8f0;
+}
+
+.analysis-toolbar__label {
+    font-size: 0.72rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: #64748b;
+}
+
+.analysis-toolbar__actions {
+    display: flex;
+    gap: 0.75rem;
+}
+
+.toolbar-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: transparent;
+    color: #cbd5e1;
+    padding: 0.75rem 1rem;
+    transition: all 0.3s ease;
+}
+
+.toolbar-btn:hover {
+    border-color: rgba(0, 242, 254, 0.35);
+    color: #00f2fe;
+}
+
+/* ── HEADER ───────────────────────────────────────────────── */
+.analysis-header {
+    margin-bottom: 2rem;
+}
+
+.analysis-header h1 {
+    color: #f8fafc;
+    font-size: 2.2rem;
+    margin: 1rem 0 0.5rem;
+    letter-spacing: -1px;
+}
+
+.analysis-header p {
+    color: #64748b;
+    font-size: 0.95rem;
+    margin-bottom: 1.5rem;
+}
+
+/* ADDED: .icon-halo — was referenced in JSX but missing entirely from CSS */
+.icon-halo {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    background: rgba(0, 242, 254, 0.08);
+    border: 1px solid rgba(0, 242, 254, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1rem;
+    position: relative;
+    transition: all 0.4s ease;
+}
+
+.icon-halo::before {
+    content: '';
+    position: absolute;
+    inset: -4px;
+    border-radius: 50%;
+    border: 1px solid rgba(0, 242, 254, 0.1);
+}
+
+/* ADDED: .scanning — pulsing ring while API call is in progress */
+.icon-halo.scanning {
+    border-color: #00f2fe;
+    box-shadow: 0 0 24px rgba(0, 242, 254, 0.3);
+    animation: scanPulse 1.4s ease-in-out infinite;
+}
+
+/* ── STEP PROGRESS INDICATOR ──────────────────────────────── */
+/* ADDED: entirely new — shows "1 — 2" step dots in the header */
+.step-progress {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 1rem;
+}
+
+.step-dot {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #64748b;
+    font-size: 0.8rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.4s ease;
+}
+
+.step-dot.active {
+    background: rgba(0, 242, 254, 0.15);
+    border-color: #00f2fe;
+    color: #00f2fe;
+    box-shadow: 0 0 12px rgba(0, 242, 254, 0.3);
+}
+
+.step-line {
+    width: 60px;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.1);
+    transition: background 0.4s ease;
+}
+
+.step-line.active {
+    background: rgba(0, 242, 254, 0.4);
+}
+
+/* ── STEP FRAME ───────────────────────────────────────────── */
+/* ADDED: was used in JSX but had no CSS definition at all */
+.step-frame {
+    width: 100%;
+}
+
+.step-subtitle {
+    color: #64748b;
+    font-size: 0.9rem;
+    margin-bottom: 1.5rem;
+}
+
+/* ── VITALS GRID ──────────────────────────────────────────── */
+.vitals-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.2rem;
+    margin-bottom: 2.5rem;
+}
+
+.input-block {
+    text-align: left;
+    position: relative;
+}
+
+.input-block label {
+    display: block;
+    color: #94a3b8;
+    text-transform: uppercase;
+    font-size: 0.65rem;
+    font-weight: 800;
+    margin-bottom: 0.5rem;
+    letter-spacing: 1px;
+}
+
+.input-block input {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 0.9rem 1rem;
+    color: #fff;
+    font-size: 0.95rem;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    transition: border-color 0.3s, background 0.3s;
+}
+
+.input-block input:focus {
+    border-color: #00f2fe;
+    outline: none;
+    background: rgba(0, 242, 254, 0.05);
+}
+
+/* ADDED: error highlight on invalid input blocks */
+.input-block.has-error input {
+    border-color: rgba(239, 68, 68, 0.6);
+    background: rgba(239, 68, 68, 0.04);
+}
+
+/* ADDED: inline validation message below each field */
+.field-error {
+    display: block;
+    color: #ef4444;
+    font-size: 0.65rem;
+    font-weight: 600;
+    margin-top: 4px;
+    letter-spacing: 0.5px;
+}
+
+/* ── GENDER PILLS ─────────────────────────────────────────── */
+.gender-selector {
+    display: flex;
+    gap: 6px;
+    background: rgba(255, 255, 255, 0.03);
+    padding: 4px;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    height: 50px;
+    align-items: center;
+}
+
+.gender-pill {
+    flex: 1;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.8rem;
+    color: #64748b;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    user-select: none;
+}
+
+.gender-pill:hover {
+    color: #94a3b8;
+    background: rgba(255, 255, 255, 0.04);
+}
+
+.gender-pill.active {
+    background: rgba(0, 242, 254, 0.15);
+    color: #00f2fe;
+    border: 1px solid rgba(0, 242, 254, 0.2);
+}
+
+/* ── SYMPTOM GRID ─────────────────────────────────────────── */
+.symptoms-selection-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.symptom-card {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 14px;
+    padding: 1rem 1.2rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    cursor: pointer;
+    color: #64748b;
+    font-size: 0.9rem;
+    font-weight: 500;
+    text-transform: capitalize;
+    transition: all 0.2s ease;
+    user-select: none;
+}
+
+.symptom-card:hover {
+    background: rgba(255, 255, 255, 0.04);
+    border-color: rgba(255, 255, 255, 0.12);
+    color: #94a3b8;
+}
+
+.symptom-card.selected {
+    background: rgba(0, 242, 254, 0.06);
+    border-color: rgba(0, 242, 254, 0.25);
+    color: #00f2fe;
+}
+
+/* ADDED: checkbox wrapper and empty state inside symptom cards */
+.checkbox {
+    width: 22px;
+    height: 22px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.checkbox-empty {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    border: 1.5px solid rgba(255, 255, 255, 0.15);
+}
+
+/* ── ERROR BANNER ─────────────────────────────────────────── */
+/* ADDED: replaces alert() — shown inline when API call fails */
+.error-banner {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    background: rgba(239, 68, 68, 0.08);
+    border: 1px solid rgba(239, 68, 68, 0.25);
+    border-radius: 12px;
+    padding: 0.9rem 1.2rem;
+    margin-bottom: 1.2rem;
+    color: #fca5a5;
+    font-size: 0.85rem;
+    text-align: left;
+    line-height: 1.5;
+}
+
+.error-banner svg {
+    flex-shrink: 0;
+    margin-top: 2px;
+    color: #ef4444;
+}
+
+/* ── BUTTONS ──────────────────────────────────────────────── */
+/* ADDED: .button-row and .button-row.split — used in JSX but had no CSS */
+.button-row {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 0.5rem;
+}
+
+.button-row.split {
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+/* ADDED: .primary-btn — the main CTA button */
+.primary-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0.85rem 2rem;
+    background: linear-gradient(135deg, rgba(0, 242, 254, 0.15), rgba(0, 242, 254, 0.05));
+    border: 1px solid rgba(0, 242, 254, 0.35);
+    border-radius: 100px;
+    color: #00f2fe;
+    font-size: 0.9rem;
+    font-weight: 700;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    cursor: pointer;
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease;
+}
+
+.primary-btn:hover:not(:disabled) {
+    background: rgba(0, 242, 254, 0.2);
+    box-shadow: 0 0 24px rgba(0, 242, 254, 0.25);
+    transform: translateY(-1px);
+}
+
+.primary-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* ADDED: .pulse — gentle attention glow on the Step 1 next button */
+.primary-btn.pulse {
+    animation: buttonPulse 2.5s ease-in-out infinite;
+}
+
+/* ADDED: .secondary-btn — Back button */
+.secondary-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0.85rem 1.5rem;
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 100px;
+    color: #64748b;
+    font-size: 0.9rem;
+    font-weight: 600;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.secondary-btn:hover:not(:disabled) {
+    border-color: rgba(255, 255, 255, 0.2);
+    color: #94a3b8;
+}
+
+.secondary-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+/* ── RESULT FRAME ─────────────────────────────────────────── */
+/* ADDED: .result-frame — wrapper for all of Step 3 */
+.result-frame {
+    width: 100%;
+}
+
+/* ── REPORT CARD ──────────────────────────────────────────── */
+.report-card {
+    margin-top: 1rem;
+    padding: 2.5rem;
+    border-radius: 2rem;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    background: rgba(10, 20, 30, 0.75);
+    border: 1px solid rgba(0, 242, 254, 0.3);
+    transition: all 0.4s ease;
+}
+
+.report-card.high {
+    border-color: rgba(239, 68, 68, 0.5);
+    box-shadow: 0 0 60px rgba(239, 68, 68, 0.2);
+}
+
+.report-card.medium {
+    border-color: rgba(245, 158, 11, 0.5);
+    box-shadow: 0 0 60px rgba(245, 158, 11, 0.2);
+}
+
+.report-card.low {
+    border-color: rgba(0, 242, 254, 0.35);
+    box-shadow: 0 0 60px rgba(0, 242, 254, 0.15);
+}
+
+.report-header-internal {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    padding-bottom: 1rem;
+}
+
+.report-header-internal h2 {
+    font-size: 0.75rem;
+    letter-spacing: 3px;
+    color: #475569;
+    margin: 0;
+    font-weight: 500;
+}
+
+.risk-badge {
+    padding: 0.35rem 1rem;
+    border-radius: 2rem;
+    font-size: 0.65rem;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+}
+
+.report-card.high .risk-badge {
+    background: #ef4444;
+    color: #fff;
+}
+
+.report-card.medium .risk-badge {
+    background: #f59e0b;
+    color: #000;
+}
+
+.report-card.low .risk-badge {
+    background: #00f2fe;
+    color: #000;
+}
+
+/* ── DIAGNOSIS ────────────────────────────────────────────── */
+.diagnosis {
+    margin: 1.5rem 0;
+    text-align: center;
+}
+
+.diagnosis-label {
+    display: block;
+    font-size: 0.7rem;
+    letter-spacing: 2px;
+    color: #475569;
+    margin-bottom: 0.75rem;
+}
+
+.diagnosis-name {
+    font-size: clamp(2rem, 6vw, 3.5rem);
+    font-weight: 900;
+    line-height: 1;
+    margin: 8px 0;
+    text-transform: uppercase;
+}
+
+.report-card.low .diagnosis-name {
+    background: linear-gradient(135deg, #fff 30%, #00f2fe);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 0 12px rgba(0, 242, 254, 0.25));
+}
+
+.report-card.medium .diagnosis-name {
+    background: linear-gradient(135deg, #fff 30%, #f59e0b);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 0 12px rgba(245, 158, 11, 0.25));
+}
+
+.report-card.high .diagnosis-name {
+    background: linear-gradient(135deg, #fff 30%, #ef4444);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 0 12px rgba(239, 68, 68, 0.25));
+}
+
+/* ── SEVERITY ─────────────────────────────────────────────── */
+/* ADDED: .severity-section wrapper */
+.severity-section {
+    margin: 1.5rem 0;
+}
+
+.severity-label {
+    font-size: 0.68rem;
+    letter-spacing: 1.5px;
+    color: #475569;
+    margin-bottom: 0.8rem;
+    text-align: center;
+    font-weight: 600;
+}
+
+.progress-bar-container {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    height: 10px;
+    overflow: hidden;
+    margin-bottom: 0.5rem;
+}
+
+.progress-fill {
+    height: 100%;
+    border-radius: 10px;
+    transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.report-card.high .progress-fill {
+    background: linear-gradient(90deg, #ef4444, #ff6b6b);
+}
+
+.report-card.medium .progress-fill {
+    background: linear-gradient(90deg, #f59e0b, #fbbf24);
+}
+
+.report-card.low .progress-fill {
+    background: linear-gradient(90deg, #00f2fe, #4facfe);
+}
+
+.severity-stats {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 8px;
+}
+
+.severity-stats span {
+    font-size: 0.62rem;
+    color: #475569;
+    font-weight: 600;
+    flex: 1;
+}
+
+.severity-stats span:first-child {
+    text-align: left;
+}
+
+.severity-stats span:last-child {
+    text-align: right;
+}
+
+/* ── VITALS SUMMARY ───────────────────────────────────────── */
+.vitals-summary {
+    display: flex;
+    justify-content: space-around;
+    background: rgba(255, 255, 255, 0.02);
+    padding: 1.4rem;
+    border-radius: 20px;
+    margin: 1.5rem 0;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.vital-item {
+    text-align: center;
+}
+
+.vital-item span {
+    display: block;
+    font-size: 0.68rem;
+    color: #475569;
+    margin-bottom: 0.4rem;
+    font-weight: 600;
+}
+
+.vital-item strong {
+    font-size: 1.25rem;
+    color: #f8fafc;
+    font-weight: 700;
+    display: block;
+}
+
+.vital-item small {
+    font-size: 0.7rem;
+    color: #64748b;
+}
+
+/* ── MEDICATIONS ──────────────────────────────────────────── */
+/* ADDED: entirely new section */
+.medications-section {
+    margin: 1.5rem 0;
+    text-align: center;
+}
+
+.medications-label {
+    font-size: 0.68rem;
+    letter-spacing: 1.5px;
+    color: #475569;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+}
+
+.medications-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+}
+
+.med-pill {
+    padding: 0.4rem 1.1rem;
+    border-radius: 100px;
+    background: rgba(0, 242, 254, 0.07);
+    border: 1px solid rgba(0, 242, 254, 0.15);
+    color: #7dd3fc;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+/* ── REPORT ACTION BUTTONS ────────────────────────────────── */
+.report-actions {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+    margin-top: 2rem;
+    flex-wrap: wrap;
+}
+
+/* BUG FIX: renamed from .new-prediction-btn to match JSX class .new-analysis-btn */
+.new-analysis-btn {
+    flex: 2;
+    min-width: 160px;
+    padding: 0.85rem 1.5rem;
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 100px;
+    color: #fff;
+    font-weight: 700;
+    font-size: 0.85rem;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.new-analysis-btn:hover {
+    background: rgba(0, 242, 254, 0.08);
+    border-color: rgba(0, 242, 254, 0.3);
+    color: #00f2fe;
+}
+
+.home-btn-minimal {
+    flex: 1;
+    min-width: 100px;
+    padding: 0.85rem 1.2rem;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 100px;
+    color: #64748b;
+    font-weight: 600;
+    font-size: 0.85rem;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.home-btn-minimal:hover {
+    background: rgba(255, 255, 255, 0.08);
+    color: #94a3b8;
+}
+
+/* ── DISCLAIMER ───────────────────────────────────────────── */
+/* ADDED: .disclaimer-v2 — used in JSX, was missing from CSS */
+.disclaimer-v2 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 1.5rem;
+    color: #334155;
+    font-size: 0.75rem;
+}
+
+.disclaimer-v2 svg {
+    flex-shrink: 0;
+    color: #475569;
+}
+
+/* ── ANIMATIONS ───────────────────────────────────────────── */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(16px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-fade-in {
+    animation: fadeIn 0.45s ease-out forwards;
+}
+
+.animate-reveal {
+    animation: fadeIn 0.7s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+/* ADDED: scanPulse — halo glow while loading */
+@keyframes scanPulse {
+
+    0%,
+    100% {
+        box-shadow: 0 0 12px rgba(0, 242, 254, 0.2);
+    }
+
+    50% {
+        box-shadow: 0 0 32px rgba(0, 242, 254, 0.5);
+        border-color: #00f2fe;
+    }
+}
+
+/* ADDED: buttonPulse — subtle CTA attention effect */
+@keyframes buttonPulse {
+
+    0%,
+    100% {
+        box-shadow: 0 0 0 rgba(0, 242, 254, 0);
+    }
+
+    50% {
+        box-shadow: 0 0 20px rgba(0, 242, 254, 0.25);
+    }
+}
+
+.spin {
+    animation: rotate 0.9s linear infinite;
+}
+
+@keyframes rotate {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* ── RESPONSIVE ───────────────────────────────────────────── */
+/* ADDED: mobile breakpoints — original had none */
+@media (max-width: 640px) {
+    .predict-page-wrapper {
+        padding: 1rem;
+    }
+
+    .analysis-toolbar {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .analysis-toolbar__meta {
+        align-items: center;
+    }
+
+    .analysis-toolbar__actions {
+        flex-direction: column;
+    }
+
+    .glass-container {
+        padding: 1.75rem 1.25rem;
+        border-radius: 24px;
+    }
+
+    .analysis-header h1 {
+        font-size: 1.5rem;
+    }
+
+    .vitals-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.85rem;
+    }
+
+    .symptoms-selection-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .report-card {
+        padding: 1.5rem 1.25rem;
+    }
+
+    .diagnosis-name {
+        font-size: 2rem;
+    }
+
+    .report-actions {
+        flex-direction: column;
+    }
+
+    .new-analysis-btn,
+    .home-btn-minimal {
+        flex: unset;
+        width: 100%;
+    }
+
+    .vitals-summary {
+        flex-direction: column;
+        gap: 1rem;
+    }
+}
+
+@media (max-width: 400px) {
+    .vitals-grid {
+        grid-template-columns: 1fr;
+    }
+}

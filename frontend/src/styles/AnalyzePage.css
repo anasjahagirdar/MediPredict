@@ -1,0 +1,360 @@
+.analyze-page {
+  min-height: 100vh;
+  background: var(--color-bg-page);
+}
+
+.analyze-page__container {
+  display: flex;
+  justify-content: center;
+  padding: 32px 16px 48px;
+}
+
+.analyze-card {
+  width: 100%;
+  max-width: 960px;
+  padding: 32px;
+  border-radius: 24px;
+  border: 1px solid var(--color-border);
+  background: var(--color-bg-card);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
+}
+
+.analyze-card__header {
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+.analyze-card__eyebrow {
+  margin: 0 0 10px;
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.analyze-card__header h1 {
+  margin: 0 0 12px;
+  font-size: 2.25rem;
+}
+
+.analyze-card__copy {
+  margin: 0 auto;
+  max-width: 620px;
+  color: var(--color-text-secondary);
+  line-height: 1.7;
+}
+
+.analyze-card__steps {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.analyze-card__step {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid var(--color-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text-secondary);
+  font-weight: 700;
+}
+
+.analyze-card__step.is-active {
+  background: var(--color-accent-gold);
+  border-color: var(--color-accent-gold);
+  color: var(--color-accent-dark);
+}
+
+.analyze-card__step-line {
+  width: 64px;
+  height: 2px;
+  background: var(--color-border);
+}
+
+.analyze-card__step-line.is-active {
+  background: var(--color-accent-gold);
+}
+
+.analyze-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.analyze-field {
+  display: grid;
+  gap: 8px;
+}
+
+.analyze-field span {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.analyze-field input {
+  padding: 14px 16px;
+  border: 1px solid var(--color-border);
+  border-radius: 14px;
+  background: #F9F7F4;
+  color: var(--color-text-primary);
+}
+
+.analyze-field input:focus {
+  outline: 2px solid rgba(232, 197, 71, 0.22);
+  border-color: var(--color-accent-gold);
+}
+
+.analyze-field small {
+  color: var(--color-risk-high);
+}
+
+.analyze-gender-toggle {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.analyze-gender-toggle button,
+.analyze-symptom {
+  border: 1px solid var(--color-border);
+  border-radius: 14px;
+  background: #F9F7F4;
+  color: var(--color-text-primary);
+}
+
+.analyze-gender-toggle button {
+  padding: 14px 16px;
+}
+
+.analyze-gender-toggle button.is-active {
+  background: #FBF6E7;
+  border-color: var(--color-accent-gold);
+}
+
+.analyze-symptoms {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.analyze-symptom {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+}
+
+.analyze-symptom.is-selected {
+  border-color: var(--color-accent-gold);
+  background: #FBF6E7;
+}
+
+.analyze-symptom__bullet {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 1px solid var(--color-border);
+}
+
+.analyze-panel__actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 24px;
+}
+
+.analyze-panel__actions--split {
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.analyze-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 14px 18px;
+  border-radius: 14px;
+  font-weight: 700;
+}
+
+.analyze-button--primary {
+  border: none;
+  background: var(--color-accent-gold);
+  color: var(--color-accent-dark);
+}
+
+.analyze-button--secondary {
+  border: 1px solid var(--color-border);
+  background: var(--color-bg-card);
+  color: var(--color-text-primary);
+}
+
+.analyze-button:disabled {
+  opacity: 0.7;
+}
+
+.analyze-error-banner {
+  margin-top: 18px;
+  padding: 14px 16px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(239, 68, 68, 0.08);
+  color: var(--color-risk-high);
+}
+
+.analyze-result-card {
+  border-radius: 20px;
+  border: 2px solid var(--color-border);
+  padding: 24px;
+  background: var(--color-bg-card);
+}
+
+.analyze-result-card--high {
+  border-color: var(--color-risk-high);
+}
+
+.analyze-result-card--medium {
+  border-color: var(--color-risk-medium);
+}
+
+.analyze-result-card--low {
+  border-color: var(--color-risk-low);
+}
+
+.analyze-result-card__top,
+.analyze-result-card__confidence-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.analyze-result-card__label {
+  margin: 0;
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.analyze-result-card__risk {
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.analyze-result-card__risk--high {
+  background: rgba(239, 68, 68, 0.12);
+  color: var(--color-risk-high);
+}
+
+.analyze-result-card__risk--medium {
+  background: rgba(245, 158, 11, 0.12);
+  color: var(--color-risk-medium);
+}
+
+.analyze-result-card__risk--low {
+  background: rgba(34, 197, 94, 0.12);
+  color: var(--color-risk-low);
+}
+
+.analyze-result-card h2 {
+  margin: 18px 0;
+  color: var(--color-accent-dark);
+  font-size: 2rem;
+}
+
+.analyze-result-card__confidence {
+  margin-bottom: 20px;
+}
+
+.analyze-result-card__progress {
+  width: 100%;
+  height: 12px;
+  border-radius: 999px;
+  overflow: hidden;
+  appearance: none;
+}
+
+.analyze-result-card__progress::-webkit-progress-bar {
+  background: #F3EEE6;
+}
+
+.analyze-result-card__progress::-webkit-progress-value {
+  background: var(--color-accent-gold);
+}
+
+.analyze-result-card__section {
+  margin-top: 18px;
+}
+
+.analyze-result-card__section > span {
+  display: block;
+  margin-bottom: 10px;
+  color: var(--color-text-secondary);
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.analyze-result-card__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.analyze-result-card__chips span {
+  padding: 8px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--color-border);
+  background: #F9F7F4;
+}
+
+.analyze-result-card__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 14px;
+  margin-top: 24px;
+}
+
+.analyze-spinner {
+  animation: analyze-spin 0.9s linear infinite;
+}
+
+@keyframes analyze-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 900px) {
+  .analyze-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .analyze-card {
+    padding: 24px;
+  }
+
+  .analyze-grid,
+  .analyze-symptoms {
+    grid-template-columns: 1fr;
+  }
+
+  .analyze-panel__actions--split,
+  .analyze-result-card__actions {
+    flex-direction: column;
+  }
+}

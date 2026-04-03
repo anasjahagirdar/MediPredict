@@ -1,0 +1,19 @@
+.auth-card-shell--wide {
+  max-width: 760px;
+}
+
+.auth-form--grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: start;
+}
+
+.auth-error--full,
+.auth-submit-button--full {
+  grid-column: 1 / -1;
+}
+
+@media (max-width: 640px) {
+  .auth-form--grid {
+    grid-template-columns: 1fr;
+  }
+}
