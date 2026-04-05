@@ -42,6 +42,9 @@ class PredictDiseaseViewTests(APITestCase):
             'symptom_breathlessness': 0,
             'symptom_sweating': 0,
             'symptom_nausea': 0,
+            'hba1c': 5.5,
+            'ldl': 100.0,
+            'hdl': 60.0
         }
 
     def test_predict_requires_authentication(self):
