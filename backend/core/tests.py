@@ -52,8 +52,17 @@ class PredictDiseaseViewTests(APITestCase):
 
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
-    @patch('core.views.ML_MODEL', new=MockModel())
-    def test_predict_returns_200_and_saves_health_record(self):
+    @patch('core.views.RISK_MODEL')
+    @patch('core.views.ML_MODEL')
+    @patch('core.views.RISK_LABEL_ENCODER')
+    @patch('core.views.LABEL_ENCODER')
+    def test_predict_returns_200_and_saves_health_record(
+        self, mock_label_encoder, mock_risk_label_encoder, mock_ml_model, mock_risk_model
+    ):
+        mock_risk_model.predict.return_value = [0]
+        mock_risk_model.predict_proba.return_value = [[0.82, 0.18]]
+        mock_risk_label_encoder.inverse_transform.return_value = ['Low']
+        mock_risk_label_encoder.classes_ = ['Low', 'Medium']
         self.client.force_authenticate(user=self.user)
 
         response = self.client.post(self.predict_url, self.payload, format='json')
