@@ -15,6 +15,9 @@ const INITIAL_STATE = {
   confirm_password: '',
 };
 
+const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]{3,}$/;
+const EMAIL_ERROR_MESSAGE = 'Please enter a valid email address.';
+
 
 function SignupPage() {
   const navigate = useNavigate();
@@ -24,13 +27,33 @@ function SignupPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleChange = (event) => {
-    const { name, value } = event.target;
+    const { name } = event.target;
+    let { value } = event.target;
+
+    if (name === 'first_name' || name === 'last_name') {
+      value = value.replace(/[^a-zA-Z\s]/g, '');
+    }
+
     setFormData((current) => ({ ...current, [name]: value }));
     setError('');
   };
 
+  const handleNameKeyDown = (event) => {
+    if (event.ctrlKey || event.metaKey || event.altKey) {
+      return;
+    }
+    if (event.key.length === 1 && !/[a-zA-Z\s]/.test(event.key)) {
+      event.preventDefault();
+    }
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
+
+    if (!EMAIL_REGEX.test(formData.email.trim())) {
+      setError(EMAIL_ERROR_MESSAGE);
+      return;
+    }
 
     if (formData.password !== formData.confirm_password) {
       setError('Passwords must match.');
@@ -83,12 +106,24 @@ function SignupPage() {
           <form className="auth-form auth-form--grid" onSubmit={handleSubmit}>
             <label className="auth-field">
               <span>First Name</span>
-              <input name="first_name" value={formData.first_name} onChange={handleChange} required />
+              <input
+                name="first_name"
+                value={formData.first_name}
+                onChange={handleChange}
+                onKeyDown={handleNameKeyDown}
+                required
+              />
             </label>
 
             <label className="auth-field">
               <span>Last Name</span>
-              <input name="last_name" value={formData.last_name} onChange={handleChange} required />
+              <input
+                name="last_name"
+                value={formData.last_name}
+                onChange={handleChange}
+                onKeyDown={handleNameKeyDown}
+                required
+              />
             </label>
 
             <label className="auth-field">
@@ -99,6 +134,7 @@ function SignupPage() {
             <label className="auth-field">
               <span>Email</span>
               <input name="email" type="email" value={formData.email} onChange={handleChange} required />
+              {error === EMAIL_ERROR_MESSAGE && <p className="auth-error">{error}</p>}
             </label>
 
             <label className="auth-field">
@@ -117,7 +153,7 @@ function SignupPage() {
               />
             </label>
 
-            {error && <p className="auth-error auth-error--full">{error}</p>}
+            {error && error !== EMAIL_ERROR_MESSAGE && <p className="auth-error auth-error--full">{error}</p>}
 
             <button className="auth-submit-button auth-submit-button--full" type="submit" disabled={isSubmitting}>
               {isSubmitting ? 'Creating Account...' : 'Create Account'}
