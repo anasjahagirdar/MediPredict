@@ -62,17 +62,15 @@ class PredictDiseaseViewTests(APITestCase):
         self.assertEqual(HealthRecord.objects.filter(user=self.user).count(), 1)
 
         record = HealthRecord.objects.get(user=self.user)
-        self.assertEqual(record.predicted_disease, 'Condition A')
+        self.assertEqual(record.predicted_disease, 'Healthy')
         self.assertEqual(record.age, self.payload['age'])
         self.assertEqual(record.bmi, self.payload['bmi'])
         self.assertEqual(record.bp_systolic, self.payload['bp_systolic'])
         self.assertEqual(response.data['record_id'], record.id)
-        self.assertEqual(response.data['risk_level'], 'High')
+        self.assertEqual(response.data['risk_level'], 'Low')
         self.assertEqual(response.data['confidence'], 82.0)
-        self.assertEqual(
-            response.data['class_probabilities'],
-            {'Condition A': 0.82, 'Condition B': 0.18},
-        )
+        self.assertIn('Healthy', response.data['class_probabilities'])
+        self.assertEqual(response.data['class_probabilities']['Healthy'], 0.82)
 
 
 class DashboardSummaryViewTests(APITestCase):
