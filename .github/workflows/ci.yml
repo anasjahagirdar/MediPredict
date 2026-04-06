@@ -75,10 +75,18 @@ jobs:
         host: ${{ secrets.VM_HOST }}
         username: ${{ secrets.VM_USER }}
         key: ${{ secrets.VM_SSH_KEY }}
+        script_stop: true
         script: |
-          cd ~/medipredict
-
-          echo "--- Pulling latest code ---"
+          cd /home/azureuser/medipredict
           git pull origin main
-
-          echo "--- Installing backend d
+          source backend/venv/bin/activate
+          pip install -r backend/requirements.txt --quiet
+          cd backend
+          python manage.py migrate --noinput
+          python manage.py collectstatic --noinput
+          cd ../frontend
+          npm install --quiet
+          npm run build
+          cd ..
+          pm2 restart medipredict-backend --update-env
+          sudo systemctl restart nginx
