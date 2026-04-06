@@ -59,7 +59,7 @@ FEATURES = [
 DISEASE_TO_RISK = {
     'Healthy':       'Low',
     'Hypertension':  'Medium',
-    'Diabetes':      'Medium',
+    'Diabetes':      'High',
     'Obesity':       'Medium',
     'Heart Disease': 'High',
 }
