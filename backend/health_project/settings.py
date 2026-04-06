@@ -107,7 +107,10 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:3000',
     'http://localhost:5173',
-    os.environ.get('FRONTEND_PRODUCTION_ORIGIN', 'https://your-production-frontend-domain'),
+    'http://104.208.68.90',
+    'http://medipredict.duckdns.org',
+    'https://medipredict.duckdns.org',
+    os.environ.get('FRONTEND_PRODUCTION_ORIGIN', 'http://medipredict.duckdns.org'),
 ]
 CORS_ALLOW_CREDENTIALS = True
 
