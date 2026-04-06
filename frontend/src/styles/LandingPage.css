@@ -1,10 +1,12 @@
+/* ── Landing Page — matches inner app theme (cream bg, navy text, gold accent) ── */
+
 .landing-container {
   width: 100%;
   min-height: 100vh;
-  background-color: #020617;
+  background-color: #F5F0E8;
   background-image:
-    linear-gradient(rgba(0, 242, 254, 0.05) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0, 242, 254, 0.05) 1px, transparent 1px);
+    linear-gradient(rgba(30, 41, 59, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(30, 41, 59, 0.04) 1px, transparent 1px);
   background-size: 80px 80px;
   display: flex;
   align-items: center;
@@ -12,15 +14,16 @@
   overflow: hidden;
 }
 
+/* Soft warm glows instead of neon blobs */
 .landing-container::before,
 .landing-container::after {
   content: '';
   position: absolute;
-  width: 60%;
-  height: 60%;
+  width: 55%;
+  height: 55%;
   border-radius: 50%;
-  filter: blur(150px);
-  opacity: 0.3;
+  filter: blur(160px);
+  opacity: 0.25;
   z-index: 0;
   pointer-events: none;
 }
@@ -28,15 +31,16 @@
 .landing-container::before {
   top: -20%;
   left: -20%;
-  background: radial-gradient(circle, #4facfe, transparent);
+  background: radial-gradient(circle, #C9A84C, transparent);
 }
 
 .landing-container::after {
   bottom: -20%;
   right: -20%;
-  background: radial-gradient(circle, #10b981, transparent);
+  background: radial-gradient(circle, #1E293B, transparent);
 }
 
+/* ── Side data streams ── */
 .side-data-stream {
   position: absolute;
   width: 60px;
@@ -45,8 +49,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  opacity: 0.2;
-  color: #00f2fe;
+  opacity: 0.18;
+  color: #1E293B;
   font-size: 0.75rem;
   writing-mode: vertical-rl;
   text-transform: uppercase;
@@ -58,12 +62,12 @@
 
 .left-stream {
   left: 0;
-  border-right: 1px solid rgba(0, 242, 254, 0.1);
+  border-right: 1px solid rgba(30, 41, 59, 0.12);
 }
 
 .right-stream {
   right: 0;
-  border-left: 1px solid rgba(0, 242, 254, 0.1);
+  border-left: 1px solid rgba(30, 41, 59, 0.12);
 }
 
 .side-data-stream span {
@@ -82,6 +86,7 @@
   }
 }
 
+/* ── Main layout ── */
 .main-layout {
   width: 100%;
   padding-left: calc(60px + 40px);
@@ -112,11 +117,12 @@
   align-items: center;
 }
 
+/* ── Badge ── */
 .badge {
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  background: rgba(16, 185, 129, 0.15);
+  background: rgba(201, 168, 76, 0.12);
   backdrop-filter: blur(4px);
   padding: 8px 16px;
   border-radius: 40px;
@@ -124,30 +130,34 @@
   font-weight: 800;
   font-size: 0.85rem;
   letter-spacing: 3px;
-  color: #10b981;
-  border: 1px solid rgba(16, 185, 129, 0.3);
+  color: #A07C20;
+  border: 1px solid rgba(201, 168, 76, 0.35);
 }
 
+/* ── Title ── */
 .title-main {
   font-family: 'Space Grotesk', sans-serif;
   font-size: clamp(2.8rem, 5vw, 6.5rem);
   font-weight: 700;
   line-height: 0.92;
   margin-bottom: 30px;
-  background: linear-gradient(to bottom right, #ffffff 40%, #00f2fe);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: #1E293B;
   letter-spacing: -4px;
+  /* No gradient clip — solid navy like the inner pages */
+  -webkit-text-fill-color: unset;
+  background: none;
 }
 
+/* ── Description ── */
 .description {
-  color: #94a3b8;
+  color: #64748B;
   font-size: 1.15rem;
   line-height: 1.75;
   max-width: 620px;
   margin-bottom: 40px;
 }
 
+/* ── Action buttons ── */
 .landing-actions {
   display: flex;
   flex-wrap: wrap;
@@ -162,74 +172,89 @@
   letter-spacing: 1px;
   transition: 0.3s ease;
   padding: 18px 34px;
+  cursor: pointer;
 }
 
+/* Primary — gold/yellow matching "Run New Analysis" button */
 .predict-btn {
-  background: linear-gradient(135deg, #4facfe, #00f2fe);
-  color: #020617;
+  background: #C9A84C;
+  color: #1E293B;
   border: none;
-  box-shadow: 0 20px 50px rgba(0, 242, 254, 0.3);
+  box-shadow: 0 12px 40px rgba(201, 168, 76, 0.3);
 }
 
 .predict-btn:hover {
+  background: #B8962E;
   transform: translateY(-3px);
-  box-shadow: 0 30px 70px rgba(0, 242, 254, 0.45);
+  box-shadow: 0 20px 55px rgba(201, 168, 76, 0.4);
 }
 
+/* Secondary — outlined navy */
 .secondary-action {
-  background: rgba(255, 255, 255, 0.03);
-  color: #e2e8f0;
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: transparent;
+  color: #1E293B;
+  border: 1.5px solid rgba(30, 41, 59, 0.25);
 }
 
 .secondary-action:hover {
-  border-color: rgba(0, 242, 254, 0.4);
-  color: #00f2fe;
+  border-color: #C9A84C;
+  color: #A07C20;
+  background: rgba(201, 168, 76, 0.06);
 }
 
+/* ── Central heartbeat icon ── */
 .central-icon {
-  color: #00f2fe;
-  opacity: 0.85;
-  filter: drop-shadow(0 0 20px rgba(0, 242, 254, 0.4));
-  animation: pulse 2s infinite;
+  color: #C9A84C;
+  opacity: 0.75;
+  filter: drop-shadow(0 0 18px rgba(201, 168, 76, 0.35));
+  animation: pulse 2s ease-in-out infinite;
 }
 
 @keyframes pulse {
+
   0%,
   100% {
     transform: scale(1);
-    opacity: 0.8;
+    opacity: 0.7;
   }
 
   50% {
     transform: scale(1.05);
-    opacity: 1;
+    opacity: 0.95;
   }
 }
 
+/* ── Floating data nodes ── */
 .data-node {
   position: absolute;
-  background: rgba(255, 255, 255, 0.03);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: #FFFFFF;
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(30, 41, 59, 0.1);
+  box-shadow: 0 4px 20px rgba(30, 41, 59, 0.08);
   padding: 12px 24px;
   border-radius: 12px;
   display: flex;
   align-items: center;
   gap: 10px;
   font-size: 0.9rem;
-  color: #ffffff;
+  color: #1E293B;
+  font-weight: 500;
   animation: float 6s ease-in-out infinite;
 }
 
+.data-node svg {
+  color: #C9A84C;
+}
+
 @keyframes float {
+
   0%,
   100% {
     transform: translateY(0);
   }
 
   50% {
-    transform: translateY(-24px);
+    transform: translateY(-20px);
   }
 }
 
@@ -257,6 +282,7 @@
   animation-delay: 3s;
 }
 
+/* ── Responsive ── */
 @media (max-width: 1024px) {
   .main-layout {
     padding-left: calc(60px + 20px);
