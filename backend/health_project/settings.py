@@ -110,7 +110,7 @@ CORS_ALLOWED_ORIGINS = [
     'http://104.208.68.90',
     'http://medipredict.duckdns.org',
     'https://medipredict.duckdns.org',
-    os.environ.get('FRONTEND_PRODUCTION_ORIGIN', 'http://medipredict.duckdns.org'),
+    os.environ.get('FRONTEND_PRODUCTION_ORIGIN', 'https://medipredict.duckdns.org'),
 ]
 CORS_ALLOW_CREDENTIALS = True
 
