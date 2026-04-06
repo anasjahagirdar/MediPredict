@@ -110,8 +110,8 @@ VITAL_RANGES = {
 
 # Population-average defaults for lab fields when user skips Step 3
 LAB_DEFAULTS = {
-    'hba1c': 5.5,   # Normal/pre-diabetic boundary
-    'ldl':   110.0, # Borderline-optimal
+    'hba1c': 5.4,   # Normal/pre-diabetic boundary
+    'ldl':   100.0, # Borderline-optimal
     'hdl':   52.0,  # Normal protective range
 }
 
