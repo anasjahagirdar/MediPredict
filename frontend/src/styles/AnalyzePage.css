@@ -1,3 +1,5 @@
+/* ── Analyze Page ── */
+
 .analyze-page {
   min-height: 100vh;
   background: var(--color-bg-page);
@@ -9,19 +11,21 @@
   padding: 32px 16px 48px;
 }
 
+/* ── Main card ── */
 .analyze-card {
   width: 100%;
   max-width: 960px;
-  padding: 32px;
+  padding: 36px;
   border-radius: 24px;
   border: 1px solid var(--color-border);
   background: var(--color-bg-card);
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 4px 24px rgba(30, 30, 46, 0.07);
 }
 
+/* ── Header ── */
 .analyze-card__header {
   text-align: center;
-  margin-bottom: 28px;
+  margin-bottom: 32px;
 }
 
 .analyze-card__eyebrow {
@@ -36,6 +40,8 @@
 .analyze-card__header h1 {
   margin: 0 0 12px;
   font-size: 2.25rem;
+  font-weight: 700;
+  letter-spacing: -0.5px;
 }
 
 .analyze-card__copy {
@@ -43,44 +49,52 @@
   max-width: 620px;
   color: var(--color-text-secondary);
   line-height: 1.7;
+  font-size: 0.97rem;
 }
 
+/* ── Step indicator ── */
 .analyze-card__steps {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 12px;
-  margin-top: 24px;
+  margin-top: 28px;
 }
 
 .analyze-card__step {
   width: 36px;
   height: 36px;
   border-radius: 50%;
-  border: 1px solid var(--color-border);
+  border: 1.5px solid var(--color-border);
   display: flex;
   align-items: center;
   justify-content: center;
   color: var(--color-text-secondary);
   font-weight: 700;
+  font-size: 0.9rem;
+  transition: background 0.2s ease, border-color 0.2s ease;
 }
 
 .analyze-card__step.is-active {
   background: var(--color-accent-gold);
   border-color: var(--color-accent-gold);
   color: var(--color-accent-dark);
+  box-shadow: 0 4px 12px rgba(232, 197, 71, 0.3);
 }
 
 .analyze-card__step-line {
   width: 64px;
   height: 2px;
   background: var(--color-border);
+  border-radius: 999px;
+  transition: background 0.2s ease;
 }
 
 .analyze-card__step-line.is-active {
   background: var(--color-accent-gold);
 }
 
+/* ── Input grid ── */
 .analyze-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -93,113 +107,224 @@
 }
 
 .analyze-field span {
-  font-size: 0.9rem;
+  font-size: 0.88rem;
   font-weight: 600;
   color: var(--color-text-primary);
 }
 
 .analyze-field input {
-  padding: 14px 16px;
-  border: 1px solid var(--color-border);
+  padding: 13px 16px;
+  border: 1.5px solid var(--color-border);
   border-radius: 14px;
   background: #F9F7F4;
   color: var(--color-text-primary);
+  font-size: 0.95rem;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .analyze-field input:focus {
-  outline: 2px solid rgba(232, 197, 71, 0.22);
+  outline: none;
   border-color: var(--color-accent-gold);
+  box-shadow: 0 0 0 3px rgba(232, 197, 71, 0.15);
 }
 
 .analyze-field small {
   color: var(--color-risk-high);
+  font-size: 0.78rem;
 }
 
+/* ── Lab field extras ── */
+.analyze-field--lab span {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.analyze-field__unit {
+  font-style: normal;
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+  font-weight: 400;
+}
+
+.analyze-field__optional {
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: #a3a3a3;
+  background: #f3f4f6;
+  padding: 1px 6px;
+  border-radius: 4px;
+}
+
+.analyze-field__hint {
+  color: var(--color-text-muted) !important;
+  font-size: 0.76rem !important;
+  margin-top: 2px;
+}
+
+.analyze-field__error {
+  color: var(--color-risk-high) !important;
+  font-size: 0.76rem !important;
+}
+
+/* ── Gender toggle ── */
 .analyze-gender-toggle {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 8px;
 }
 
-.analyze-gender-toggle button,
-.analyze-symptom {
-  border: 1px solid var(--color-border);
+.analyze-gender-toggle button {
+  padding: 13px 16px;
+  border: 1.5px solid var(--color-border);
   border-radius: 14px;
   background: #F9F7F4;
   color: var(--color-text-primary);
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease;
 }
 
-.analyze-gender-toggle button {
-  padding: 14px 16px;
+.analyze-gender-toggle button:hover:not(.is-active) {
+  border-color: #d4c9b8;
+  background: #F5F0E8;
 }
 
 .analyze-gender-toggle button.is-active {
   background: #FBF6E7;
   border-color: var(--color-accent-gold);
+  color: var(--color-accent-dark);
+  box-shadow: 0 2px 8px rgba(232, 197, 71, 0.2);
 }
 
+/* ── Symptoms grid ── */
 .analyze-symptoms {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 14px;
+  gap: 12px;
 }
 
 .analyze-symptom {
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 16px;
+  padding: 14px 16px;
+  border: 1.5px solid var(--color-border);
+  border-radius: 14px;
+  background: #F9F7F4;
+  color: var(--color-text-primary);
+  cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.analyze-symptom:hover:not(.is-selected) {
+  border-color: #d4c9b8;
+  background: #F5F0E8;
 }
 
 .analyze-symptom.is-selected {
   border-color: var(--color-accent-gold);
   background: #FBF6E7;
+  box-shadow: 0 2px 8px rgba(232, 197, 71, 0.18);
 }
 
 .analyze-symptom__bullet {
   width: 18px;
   height: 18px;
   border-radius: 50%;
-  border: 1px solid var(--color-border);
+  border: 1.5px solid var(--color-border);
+  flex-shrink: 0;
+  transition: background 0.2s ease, border-color 0.2s ease;
 }
 
+.analyze-symptom.is-selected .analyze-symptom__bullet {
+  background: var(--color-accent-gold);
+  border-color: var(--color-accent-gold);
+}
+
+/* ── Action rows ── */
 .analyze-panel__actions {
   display: flex;
   justify-content: flex-end;
-  margin-top: 24px;
+  margin-top: 28px;
+  gap: 10px;
 }
 
 .analyze-panel__actions--split {
   justify-content: space-between;
-  gap: 16px;
+  gap: 10px;
 }
 
+/* ── Buttons ── */
 .analyze-button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
-  padding: 14px 18px;
+  padding: 13px 22px;
   border-radius: 14px;
   font-weight: 700;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
 }
 
 .analyze-button--primary {
   border: none;
   background: var(--color-accent-gold);
   color: var(--color-accent-dark);
+  box-shadow: 0 4px 16px rgba(232, 197, 71, 0.28);
+}
+
+.analyze-button--primary:hover:not(:disabled) {
+  background: #D4B030;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(232, 197, 71, 0.38);
 }
 
 .analyze-button--secondary {
-  border: 1px solid var(--color-border);
+  border: 1.5px solid var(--color-border);
   background: var(--color-bg-card);
   color: var(--color-text-primary);
 }
 
-.analyze-button:disabled {
-  opacity: 0.7;
+.analyze-button--secondary:hover:not(:disabled) {
+  border-color: #d4c9b8;
+  background: #F5F0E8;
 }
 
+.analyze-button--ghost {
+  background: transparent;
+  border: 1.5px solid var(--color-border);
+  color: var(--color-text-secondary);
+  padding: 10px 18px;
+  border-radius: 12px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: border-color 0.15s, color 0.15s, background 0.15s;
+}
+
+.analyze-button--ghost:hover:not(:disabled) {
+  border-color: #9ca3af;
+  color: var(--color-text-primary);
+  background: #F5F0E8;
+}
+
+.analyze-button:disabled,
+.analyze-button--ghost:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* ── Error banner ── */
 .analyze-error-banner {
   margin-top: 18px;
   padding: 14px 16px;
@@ -208,14 +333,65 @@
   align-items: center;
   gap: 10px;
   background: rgba(239, 68, 68, 0.08);
+  border: 1px solid rgba(239, 68, 68, 0.2);
   color: var(--color-risk-high);
+  font-size: 0.9rem;
 }
 
+/* ── Lab banner ── */
+.analyze-lab-banner {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 14px 16px;
+  margin-bottom: 20px;
+  background-color: #f0f9ff;
+  border: 1px solid #bae6fd;
+  border-radius: 12px;
+  color: #0369a1;
+}
+
+.analyze-lab-banner svg {
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.analyze-lab-banner strong {
+  display: block;
+  font-size: 0.88rem;
+  margin-bottom: 3px;
+}
+
+.analyze-lab-banner p {
+  font-size: 0.8rem;
+  margin: 0;
+  color: #0369a1;
+  opacity: 0.85;
+  line-height: 1.5;
+}
+
+/* ── Lab filled count ── */
+.analyze-lab-count {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.82rem;
+  color: #16a34a;
+  margin: 4px 0 12px;
+  font-weight: 500;
+}
+
+.analyze-lab-count svg {
+  flex-shrink: 0;
+}
+
+/* ── Result card ── */
 .analyze-result-card {
   border-radius: 20px;
   border: 2px solid var(--color-border);
-  padding: 24px;
+  padding: 28px;
   background: var(--color-bg-card);
+  box-shadow: 0 4px 20px rgba(30, 30, 46, 0.07);
 }
 
 .analyze-result-card--high {
@@ -243,90 +419,196 @@
   color: var(--color-text-secondary);
   text-transform: uppercase;
   letter-spacing: 0.14em;
-  font-size: 0.8rem;
+  font-size: 0.78rem;
   font-weight: 700;
 }
 
 .analyze-result-card__risk {
-  padding: 6px 10px;
+  padding: 5px 12px;
   border-radius: 999px;
-  font-size: 0.82rem;
+  font-size: 0.8rem;
   font-weight: 700;
 }
 
 .analyze-result-card__risk--high {
-  background: rgba(239, 68, 68, 0.12);
+  background: rgba(239, 68, 68, 0.1);
   color: var(--color-risk-high);
 }
 
 .analyze-result-card__risk--medium {
-  background: rgba(245, 158, 11, 0.12);
+  background: rgba(245, 158, 11, 0.1);
   color: var(--color-risk-medium);
 }
 
 .analyze-result-card__risk--low {
-  background: rgba(34, 197, 94, 0.12);
+  background: rgba(34, 197, 94, 0.1);
   color: var(--color-risk-low);
 }
 
 .analyze-result-card h2 {
-  margin: 18px 0;
+  margin: 16px 0;
   color: var(--color-accent-dark);
   font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: -0.5px;
 }
 
+/* ── Confidence bar ── */
 .analyze-result-card__confidence {
   margin-bottom: 20px;
 }
 
 .analyze-result-card__progress {
   width: 100%;
-  height: 12px;
+  height: 10px;
   border-radius: 999px;
   overflow: hidden;
   appearance: none;
+  margin-top: 8px;
 }
 
 .analyze-result-card__progress::-webkit-progress-bar {
-  background: #F3EEE6;
+  background: #F0EBE0;
+  border-radius: 999px;
 }
 
 .analyze-result-card__progress::-webkit-progress-value {
   background: var(--color-accent-gold);
+  border-radius: 999px;
 }
 
+.analyze-result-card__progress::-moz-progress-bar {
+  background: var(--color-accent-gold);
+}
+
+/* Low confidence state */
+.analyze-result-card__confidence-value--low {
+  color: #d97706;
+}
+
+.analyze-result-card__progress--low::-webkit-progress-value {
+  background-color: #d97706;
+}
+
+.analyze-result-card__progress--low::-moz-progress-bar {
+  background-color: #d97706;
+}
+
+/* ── Low confidence warning ── */
+.analyze-result-card__low-confidence {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 10px 14px;
+  margin: 4px 0 8px;
+  background-color: #fffbeb;
+  border: 1px solid #fcd34d;
+  border-radius: 10px;
+  color: #92400e;
+  font-size: 0.82rem;
+  line-height: 1.5;
+}
+
+.analyze-result-card__low-confidence svg {
+  flex-shrink: 0;
+  margin-top: 1px;
+  color: #d97706;
+}
+
+/* ── Result sections ── */
 .analyze-result-card__section {
-  margin-top: 18px;
+  margin-top: 20px;
 }
 
 .analyze-result-card__section>span {
   display: block;
   margin-bottom: 10px;
   color: var(--color-text-secondary);
-  font-size: 0.9rem;
+  font-size: 0.88rem;
   font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
 }
 
 .analyze-result-card__chips {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 8px;
 }
 
 .analyze-result-card__chips span {
-  padding: 8px 12px;
+  padding: 7px 14px;
   border-radius: 999px;
   border: 1px solid var(--color-border);
   background: #F9F7F4;
+  font-size: 0.85rem;
+  color: var(--color-text-primary);
 }
 
+/* ── Alternative diagnosis ── */
+.analyze-result-card__alternative {
+  margin: 12px 0 4px;
+  padding: 14px 16px;
+  background-color: #F9F7F4;
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+}
+
+.analyze-result-card__alternative-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  margin: 0 0 8px;
+}
+
+.analyze-result-card__alternative-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.analyze-result-card__alternative-name {
+  font-size: 0.93rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.analyze-result-card__alternative-prob {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--color-text-secondary);
+}
+
+.analyze-result-card__progress--alt {
+  height: 5px;
+  opacity: 0.55;
+  margin-top: 4px;
+}
+
+.analyze-result-card__progress--alt::-webkit-progress-bar {
+  background: #e5e0d8;
+}
+
+.analyze-result-card__progress--alt::-webkit-progress-value {
+  background: #9ca3af;
+}
+
+.analyze-result-card__progress--alt::-moz-progress-bar {
+  background: #9ca3af;
+}
+
+/* ── Result actions ── */
 .analyze-result-card__actions {
   display: flex;
   justify-content: flex-end;
-  gap: 14px;
-  margin-top: 24px;
+  gap: 12px;
+  margin-top: 28px;
 }
 
+/* ── Spinner ── */
 .analyze-spinner {
   animation: analyze-spin 0.9s linear infinite;
 }
@@ -337,6 +619,14 @@
   }
 }
 
+/* ── Reports table (shared) ── */
+.reports-table th,
+.reports-table td {
+  padding: 20px 40px !important;
+  text-align: left;
+}
+
+/* ── Responsive ── */
 @media (max-width: 900px) {
   .analyze-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -357,296 +647,4 @@
   .analyze-result-card__actions {
     flex-direction: column;
   }
-}
-
-.reports-table th,
-.reports-table td {
-  padding-left: 40px !important;
-  padding-right: 40px !important;
-  padding-top: 20px !important;
-  padding-bottom: 20px !important;
-  text-align: left;
-}
-
-/* ── Add these to the bottom of your existing AnalyzePage.css ── */
-
-/* Low Confidence Warning Banner */
-.analyze-result-card__low-confidence {
-  display: flex;
-  align-items: flex-start;
-  gap: 8px;
-  padding: 10px 14px;
-  margin: 4px 0 8px;
-  background-color: #fffbeb;
-  border: 1px solid #fcd34d;
-  border-radius: 8px;
-  color: #92400e;
-  font-size: 0.82rem;
-  line-height: 1.4;
-}
-
-.analyze-result-card__low-confidence svg {
-  flex-shrink: 0;
-  margin-top: 1px;
-  color: #d97706;
-}
-
-/* Confidence value turns amber when low */
-.analyze-result-card__confidence-value--low {
-  color: #d97706;
-}
-
-/* Progress bar turns amber when low confidence */
-.analyze-result-card__progress--low::-webkit-progress-value {
-  background-color: #d97706;
-}
-
-.analyze-result-card__progress--low::-moz-progress-bar {
-  background-color: #d97706;
-}
-
-/* Alternative Diagnosis Block */
-.analyze-result-card__alternative {
-  margin: 12px 0 4px;
-  padding: 12px 14px;
-  background-color: #f8f7f4;
-  border: 1px solid #e5e0d8;
-  border-radius: 10px;
-}
-
-.analyze-result-card__alternative-label {
-  font-size: 0.72rem;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: #9ca3af;
-  margin: 0 0 6px;
-}
-
-.analyze-result-card__alternative-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 6px;
-}
-
-.analyze-result-card__alternative-name {
-  font-size: 0.95rem;
-  font-weight: 600;
-  color: #374151;
-}
-
-.analyze-result-card__alternative-prob {
-  font-size: 0.9rem;
-  font-weight: 700;
-  color: #6b7280;
-}
-
-/* Alternative diagnosis progress bar — muted grey */
-.analyze-result-card__progress--alt {
-  height: 5px;
-  opacity: 0.6;
-}
-
-.analyze-result-card__progress--alt::-webkit-progress-value {
-  background-color: #9ca3af;
-}
-
-.analyze-result-card__progress--alt::-moz-progress-bar {
-  background-color: #9ca3af;
-}
-
-/* ── Add these to the bottom of your existing AnalyzePage.css ── */
-
-/* Lab Step Banner */
-.analyze-lab-banner {
-  display: flex;
-  align-items: flex-start;
-  gap: 12px;
-  padding: 12px 16px;
-  margin-bottom: 20px;
-  background-color: #f0f9ff;
-  border: 1px solid #bae6fd;
-  border-radius: 10px;
-  color: #0369a1;
-}
-
-.analyze-lab-banner svg {
-  flex-shrink: 0;
-  margin-top: 2px;
-}
-
-.analyze-lab-banner strong {
-  display: block;
-  font-size: 0.88rem;
-  margin-bottom: 3px;
-}
-
-.analyze-lab-banner p {
-  font-size: 0.80rem;
-  margin: 0;
-  color: #0369a1;
-  opacity: 0.85;
-  line-height: 1.4;
-}
-
-/* Lab field extras */
-.analyze-field--lab span {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  flex-wrap: wrap;
-}
-
-.analyze-field__unit {
-  font-style: normal;
-  font-size: 0.75rem;
-  color: #9ca3af;
-  font-weight: 400;
-}
-
-.analyze-field__optional {
-  font-size: 0.68rem;
-  font-weight: 600;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  color: #a3a3a3;
-  background: #f3f4f6;
-  padding: 1px 6px;
-  border-radius: 4px;
-}
-
-.analyze-field__hint {
-  color: #9ca3af !important;
-  font-size: 0.74rem !important;
-  margin-top: 2px;
-}
-
-.analyze-field__error {
-  color: #dc2626 !important;
-  font-size: 0.74rem !important;
-}
-
-/* Lab filled count indicator */
-.analyze-lab-count {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 0.80rem;
-  color: #16a34a;
-  margin: 4px 0 12px;
-}
-
-.analyze-lab-count svg {
-  flex-shrink: 0;
-}
-
-/* Ghost button for Skip & Predict */
-.analyze-button--ghost {
-  background: transparent;
-  border: 1px solid #d1d5db;
-  color: #6b7280;
-  padding: 10px 18px;
-  border-radius: 8px;
-  font-size: 0.88rem;
-  cursor: pointer;
-  transition: border-color 0.15s, color 0.15s;
-}
-
-.analyze-button--ghost:hover:not(:disabled) {
-  border-color: #9ca3af;
-  color: #374151;
-}
-
-.analyze-button--ghost:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-/* Three-button action row spacing */
-.analyze-panel__actions--split {
-  gap: 8px;
-}
-
-/* Low Confidence Warning */
-.analyze-result-card__low-confidence {
-  display: flex;
-  align-items: flex-start;
-  gap: 8px;
-  padding: 10px 14px;
-  margin: 4px 0 8px;
-  background-color: #fffbeb;
-  border: 1px solid #fcd34d;
-  border-radius: 8px;
-  color: #92400e;
-  font-size: 0.82rem;
-  line-height: 1.4;
-}
-
-.analyze-result-card__low-confidence svg {
-  flex-shrink: 0;
-  margin-top: 1px;
-  color: #d97706;
-}
-
-.analyze-result-card__confidence-value--low {
-  color: #d97706;
-}
-
-.analyze-result-card__progress--low::-webkit-progress-value {
-  background-color: #d97706;
-}
-
-.analyze-result-card__progress--low::-moz-progress-bar {
-  background-color: #d97706;
-}
-
-/* Alternative Diagnosis */
-.analyze-result-card__alternative {
-  margin: 12px 0 4px;
-  padding: 12px 14px;
-  background-color: #f8f7f4;
-  border: 1px solid #e5e0d8;
-  border-radius: 10px;
-}
-
-.analyze-result-card__alternative-label {
-  font-size: 0.72rem;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: #9ca3af;
-  margin: 0 0 6px;
-}
-
-.analyze-result-card__alternative-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 6px;
-}
-
-.analyze-result-card__alternative-name {
-  font-size: 0.95rem;
-  font-weight: 600;
-  color: #374151;
-}
-
-.analyze-result-card__alternative-prob {
-  font-size: 0.9rem;
-  font-weight: 700;
-  color: #6b7280;
-}
-
-.analyze-result-card__progress--alt {
-  height: 5px;
-  opacity: 0.6;
-}
-
-.analyze-result-card__progress--alt::-webkit-progress-value {
-  background-color: #9ca3af;
-}
-
-.analyze-result-card__progress--alt::-moz-progress-bar {
-  background-color: #9ca3af;
 }
