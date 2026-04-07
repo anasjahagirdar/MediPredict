@@ -1,4 +1,4 @@
-import { Bell, FileText, Settings } from 'lucide-react';
+import { Bell, FileText, History, Settings, Stethoscope } from 'lucide-react';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 
@@ -47,13 +47,15 @@ function Navbar() {
           to="/dashboard"
           className={({ isActive }) => `navbar__link ${isActive ? 'is-active' : ''}`}
         >
-          My Health History
+          <History size={16} />
+          <span>My Health History</span>
         </NavLink>
         <NavLink
           to="/analyze"
           className={({ isActive }) => `navbar__link ${isActive ? 'is-active' : ''}`}
         >
-          Analyse Symptoms
+          <Stethoscope size={16} />
+          <span>Analyse Symptoms</span>
         </NavLink>
         <NavLink
           to="/reports"
